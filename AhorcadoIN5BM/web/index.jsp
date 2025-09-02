@@ -12,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AhorcadoMF | A.A 2024004</title>
         <link rel="stylesheet" href="Styles/ahorcado.css">
+        <script src="js/ahorcado.js"></script>
     </head>
     
     <body>
