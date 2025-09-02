@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { palabra: "GUITARRA", pistas: ["img/guitarra1.jpg", "img/guitarra2.jpg", "img/guitarra3.jpg"] },
         { palabra: "TELEFONO", pistas: ["img/telefono1.jpg", "img/telefono2.jpg", "img/telefono3.jpg"] },
         { palabra: "INTERNET", pistas: ["img/internet1.jpg", "img/internet2.jpg", "img/internet3.jpg"] },
-        { palabra: "AUTOMOVIL", pistas: ["img/automovil3.jpg", "img/automovil2.jpg", "img/automovil3.jpg"] }
+        { palabra: "AUTOMOVIL", pistas: ["img/automovil1.jpg", "img/automovil2.jpg", "img/automovil3.jpg"] }
     ];
 
     // Fases de las imagenes del ahorcado
@@ -183,8 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // se crea el modelo de la imagen
             const img = document.createElement("img");
             img.src = pistas[index];
-            img.style.maxWidth = "300px";
-            img.style.maxHeight = "300px";
+            img.style.maxWidth = "700px";
+            img.style.maxHeight = "700px";
 
             const modal = document.createElement("div");
             modal.style.position = "fixed";
