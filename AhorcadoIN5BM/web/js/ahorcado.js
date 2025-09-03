@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { palabra: "AUTOMOVIL", pistas: ["img/automovil1.jpg", "img/automovil2.jpg", "img/automovil3.jpg"] }
     ];
 
-    // Fases de las imagenes del ahorcado
+    // Fases de las imagenes del ahorcado por arrayList
     const imagenes = [
         "img/BaseAhorcado.jpg", // Base
         "img/Ahorcado1.jpg",    // 1 cuerda
@@ -63,13 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Inicia el temporizador
         iniciarTemporizador();
-        console.log("Palabra seleccionada:", palabraSeleccionada);
+        alert("Palabra seleccionada:", palabraSeleccionada);
     }
 
     //Funcion para reiniciar el intento pero con la misma palabra
     function reiniciarJuego(){
         intentos = 0;
-        tiempoRestante = 300;
+        tiempoRestante = 600;
         juegoPausado = false;
         btnPausar.textContent = "Pausar";
 

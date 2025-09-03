@@ -21,16 +21,14 @@
             <div class="temporizador">Temporizador: 05:00</div>
 
             <div class="area-juego">
-                <!-- Sección del muñeco -->
                 <div class="muneco">
                     <div class="marco-muneco">
                         <img src="img/BaseAhorcado.jpg" alt="Muñeco Ahorcado" class="imagen-muneco">
                     </div>
                 </div>
 
-                <!-- Sección de juego -->
                 <div class="area-principal">
-                    <div class="palabra">_ _ _ _ _ _ _ _</div>
+                    <div class="palabra">_ _ _ _ _ _ _ _ _</div>
 
                     <div class="teclado">
                         <button>A</button>
