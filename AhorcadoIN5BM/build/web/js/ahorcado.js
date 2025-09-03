@@ -63,13 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Inicia el temporizador
         iniciarTemporizador();
-        alert("Palabra seleccionada:", palabraSeleccionada);
+        console.log("Palabra seleccionada:", palabraSeleccionada);
     }
 
     //Funcion para reiniciar el intento pero con la misma palabra
     function reiniciarJuego(){
         intentos = 0;
-        tiempoRestante = 600;
+        tiempoRestante = 300;
         juegoPausado = false;
         btnPausar.textContent = "Pausar";
 
