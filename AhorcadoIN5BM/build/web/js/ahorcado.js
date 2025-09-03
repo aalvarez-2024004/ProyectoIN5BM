@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "img/Ahorcado7.jpg"     // 7 pierna
     ];
 
-    // Variables de control
+    // Variables de control sobre el juego
       let palabraSeleccionada = "";
       let palabraOculta = [];
       let intentos = 0;
