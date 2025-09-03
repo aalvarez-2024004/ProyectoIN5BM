@@ -1,9 +1,8 @@
-<%-- 
+<%--
     Document   : index
     Created on : 2 sept 2025, 08:09:27
     Author     : Adrian Alvarez
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,22 +13,21 @@
         <link rel="stylesheet" href="Styles/ahorcado.css">
         <script src="js/ahorcado.js"></script>
     </head>
-    
+
     <body>
         <div class="contenedor">
             <div class="titulo">ahorcadoMF</div>
             <div class="temporizador">Temporizador: 05:00</div>
-
             <div class="area-juego">
                 <div class="muneco">
                     <div class="marco-muneco">
                         <img src="img/BaseAhorcado.jpg" alt="Muñeco Ahorcado" class="imagen-muneco">
                     </div>
                 </div>
-
                 <div class="area-principal">
-                    <div class="palabra">   </div>
-
+                    <div class="palabra"></div>
+                    <!-- Contenedor para mostrar las pistas de texto -->
+                    <div class="pista-texto"></div>
                     <div class="teclado">
                         <button>A</button>
                         <button>B</button>
@@ -58,14 +56,12 @@
                         <button>X</button>
                         <button>Y</button>
                         <button>Z</button>
-                    </div>
-
+                                       </div>
                     <div class="pistas">
-                        <button>1</button>
-                        <button>2</button>
-                        <button>3</button>
+                        <button>Pista 1</button>
+                        <button>Pista 2</button>
+                        <button>Pista 3</button>
                     </div>
-
                     <div class="controles">
                         <button class="iniciar">Iniciar</button>
                         <button class="reiniciar">Reiniciar</button>
@@ -75,5 +71,4 @@
             </div>
         </div>
     </body>
-    
 </html>

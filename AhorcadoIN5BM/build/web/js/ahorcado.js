@@ -1,12 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // Configuracion de palabras:
-      const palabras = [
-        { palabra: "LEOPARDO", pistas: ["img/leopardo1.jpg", "img/leopardo2.jpg", "img/leopardo3.jpg"] },
-        { palabra: "GUITARRA", pistas: ["img/guitarra1.jpg", "img/guitarra2.jpg", "img/guitarra3.jpg"] },
-        { palabra: "TELEFONO", pistas: ["img/telefono1.jpg", "img/telefono2.jpg", "img/telefono3.jpg"] },
-        { palabra: "INTERNET", pistas: ["img/internet1.jpg", "img/internet2.jpg", "img/internet3.jpg"] },
-        { palabra: "AUTOMOVIL", pistas: ["img/automovil1.jpg", "img/automovil2.jpg", "img/automovil3.jpg"] }
+    const palabras = [
+        {palabra: "LEOPARDO", pistas: [
+                "Es un felino salvaje conocido por su velocidad.",
+                "Tiene manchas en su pelaje.",
+                "Habita principalmente en África y algunas partes de Asia."
+            ]},
+        {palabra: "GUITARRA", pistas: [
+                "Es un instrumento musical de cuerda.",
+                "Puede ser acústica o eléctrica.",
+                "Se toca con los dedos o con una púa."
+            ]},
+        {palabra: "TELEFONO", pistas: [
+                "Dispositivo utilizado para comunicarse a distancia.",
+                "Puede ser fijo o móvil.",
+                "Inventado por Alexander Graham Bell."
+            ]},
+        {palabra: "INTERNET", pistas: [
+                "Red global de computadoras interconectadas.",
+                "Permite el acceso a información y comunicación.",
+                "Se utiliza para navegar, enviar correos y ver videos."
+            ]},
+        {palabra: "AUTOMOVIL", pistas: [
+                "Vehículo de transporte con motor.",
+                "Generalmente tiene cuatro ruedas.",
+                "Se conduce con un volante y pedales."
+            ]}
     ];
 
     // Fases de las imagenes del ahorcado por arrayList
@@ -176,36 +196,21 @@ document.addEventListener("DOMContentLoaded", () => {
     //Funcion que permite mostrar las 3 pistas de la palabra con el botonnn
     function mostrarPista(index) {
         if (juegoPausado)
-            return; // si el juego en pausa, no muestra nada
-
+            return; // Si el juego está en pausa, no muestra nada
         const pistas = palabras[palabraActualIndex].pistas;
         if (pistas && pistas[index]) {
-            // se crea el modelo de la imagen
-            const img = document.createElement("img");
-            img.src = pistas[index];
-            img.style.maxWidth = "700px";
-            img.style.maxHeight = "700px";
-
-            const modal = document.createElement("div");
-            modal.style.position = "fixed";
-            modal.style.top = "0";
-            modal.style.left = "0";
-            modal.style.width = "100%";
-            modal.style.height = "100%";
-            modal.style.backgroundColor = "rgba(0,0,0,0.8)";
-            modal.style.display = "flex";
-            modal.style.justifyContent = "center";
-            modal.style.alignItems = "center";
-            modal.style.zIndex = "1000";
-            modal.appendChild(img);
-
-            // cerrar la imagen al hacer click
-            modal.onclick = () => document.body.removeChild(modal);
-            document.body.appendChild(modal);
-
-            // esto hace que si uso la pista, no se pueda volver a ver
+            const pistaTexto = document.querySelector(".pista-texto");
+            pistaTexto.textContent = pistas[index];
             btnPistas[index].disabled = true;
         }
+    }
+    
+    // Función para reiniciar las pistas
+    function reiniciarPistas() {
+        btnPistas.forEach((b, i) => {
+            b.disabled = false;
+        });
+        document.querySelector(".pista-texto").textContent = "";
     }
 
     //Hacer que si el boton esta en pausa tenga la opcion de ponerse en reanudar
