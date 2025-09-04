@@ -23,11 +23,13 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_AgregarPalabra('LEOPARDO', 'Es un felino salvaje conocido por su velocidad.', 'Tiene manchas en su pelaje.', 'Habita principalmente en África y algunas partes de Asia.');
+call sp_AgregarPalabra('ADRIAN', 'Es un felino salvaje conocido por su velocidad.', 'Tiene manchas en su pelaje.', 'Habita principalmente en África y algunas partes de Asia.');
 call sp_AgregarPalabra('GUITARRA', 'Es un instrumento musical de cuerda.', 'Puede ser acústica o eléctrica.', 'Se toca con los dedos o con una púa.');
 call sp_AgregarPalabra('TELEFONO', 'Dispositivo utilizado para comunicarse a distancia.', 'Puede ser fijo o móvil.', 'Inventado por Alexander Graham Bell.');
 call sp_AgregarPalabra('INTERNET', 'Red global de computadoras interconectadas.', 'Permite el acceso a información y comunicación.', 'Se utiliza para navegar, enviar correos y ver videos.');
 call sp_AgregarPalabra('AUTOMOVIL', 'Vehículo de transporte con motor.', 'Generalmente tiene cuatro ruedas.', 'Se conduce con un volante y pedales.');
+
+call sp_AgregarPalabra('Ahorcado', 'Juego dinámico.', 'Debes de adivinar la palabra.', 'Es un muñeco que se va completando.');
 
 Delimiter $$
 	create procedure sp_ListarPalabras()

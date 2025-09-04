@@ -6,7 +6,6 @@ package Controlador;
 
 import Modelo.Palabra;
 import Modelo.PalabraDAO;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -59,13 +58,18 @@ public class ControladorPalabras extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
         PalabraDAO dao = new PalabraDAO();
         Palabra palabra = dao.obtenerPalabraAleatoria();
 
-        Gson gson = new Gson();
-        out.print(gson.toJson(palabra));
+        String respuesta = "{" + "\"palabra\":\"" + palabra.getPalabra() + "\","
+                + "\"pista1\":\"" + palabra.getPista1() + "\","
+                + "\"pista2\":\"" + palabra.getPista2() + "\","
+                + "\"pista3\":\"" + palabra.getPista3() + "\"" + "}";
+
+        out.print(respuesta);
     }
 
     /**

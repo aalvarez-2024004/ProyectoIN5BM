@@ -39,13 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch("ControladorPalabras"); // Servlet
             if (!response.ok) throw new Error("Error al obtener palabra");
 
-            const data = await response.json();
+            const infoDb = await response.json();
             return {
-                palabra: data.palabra.toUpperCase(),
-                pistas: [data.pista1, data.pista2, data.pista3]
+                palabra: infoDb.palabra.toUpperCase(),
+                pistas: [infoDb.pista1, infoDb.pista2, infoDb.pista3]
             };
         } catch (error) {
-            console.error("Error:", error);
             return null;
         }
     }
@@ -58,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         juegoPausado = false;
         btnPausar.textContent = "Pausar";
 
-        const palabraObj = await obtenerPalabra();
+        const palabraObj = await obtenerPalabra(); //Espera la palabra desde el serlet
         if (!palabraObj) {
             alert("No se pudo obtener palabra de la base de datos.");
             return;
@@ -74,8 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
         activarTeclado(true);
         reiniciarPistas();
         iniciarTemporizador();
-
-        console.log("Palabra seleccionada:", palabraSeleccionada);
     }
 
     //Funcion para reiniciar el intento pero con la misma palabra
@@ -124,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (intentos === maxIntentos) {
                 clearInterval(temporizador);
-                alert("Perdiste, suerte a la proxima! La palabra era" + palabraSeleccionada);
+                alert("Perdiste, suerte a la proxima :D La palabra era " + palabraSeleccionada);
                 activarTeclado(false);
             }
         }
