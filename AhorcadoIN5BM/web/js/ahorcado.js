@@ -1,34 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Configuracion de palabras:
-    const palabras = [
-        {palabra: "LEOPARDO", pistas: [
-                "Es un felino salvaje conocido por su velocidad.",
-                "Tiene manchas en su pelaje.",
-                "Habita principalmente en África y algunas partes de Asia."
-            ]},
-        {palabra: "GUITARRA", pistas: [
-                "Es un instrumento musical de cuerda.",
-                "Puede ser acústica o eléctrica.",
-                "Se toca con los dedos o con una púa."
-            ]},
-        {palabra: "TELEFONO", pistas: [
-                "Dispositivo utilizado para comunicarse a distancia.",
-                "Puede ser fijo o móvil.",
-                "Inventado por Alexander Graham Bell."
-            ]},
-        {palabra: "INTERNET", pistas: [
-                "Red global de computadoras interconectadas.",
-                "Permite el acceso a información y comunicación.",
-                "Se utiliza para navegar, enviar correos y ver videos."
-            ]},
-        {palabra: "AUTOMOVIL", pistas: [
-                "Vehículo de transporte con motor.",
-                "Generalmente tiene cuatro ruedas.",
-                "Se conduce con un volante y pedales."
-            ]}
-    ];
-
     // Fases de las imagenes del ahorcado por arrayList
     const imagenes = [
         "img/BaseAhorcado.jpg", // Base
@@ -41,15 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
         "img/Ahorcado7.jpg"     // 7 pierna
     ];
 
-    // Variables de control sobre el juego
-      let palabraSeleccionada = "";
-      let palabraOculta = [];
-      let intentos = 0;
-      let tiempoRestante = 300; // 5 minutos
-      let temporizador;
-      let juegoPausado = false;
-      const maxIntentos = imagenes.length - 1;
-      let palabraActualIndex = 0;
+    let palabraSeleccionada = "";
+    let palabraOculta = [];
+    let intentos = 0;
+    let tiempoRestante = 300; // 5 minutos
+    let temporizador;
+    let juegoPausado = false;
+    const maxIntentos = imagenes.length - 1;
+
+    // pistas que vienen de la BD
+        let pistasActuales = [];
 
     // Elementros del html referenciados
     const imgAhorcado = document.querySelector(".imagen-muneco");
@@ -61,48 +33,64 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnPistas = document.querySelectorAll(".pistas button");
     const temporizadorElement = document.querySelector(".temporizador");
 
+    //Funcion para obtener la palara desde el servlet ControladorPalabras
+    async function obtenerPalabra() {
+        try {
+            const response = await fetch("ControladorPalabras"); // Servlet
+            if (!response.ok) throw new Error("Error al obtener palabra");
+
+            const data = await response.json();
+            return {
+                palabra: data.palabra.toUpperCase(),
+                pistas: [data.pista1, data.pista2, data.pista3]
+            };
+        } catch (error) {
+            console.error("Error:", error);
+            return null;
+        }
+    }
+
+    
     // Funcion para iniciar un jjuego nuevo
-    function iniciarJuego(){
+    async function iniciarJuego() {
         intentos = 0;
         tiempoRestante = 300;
         juegoPausado = false;
         btnPausar.textContent = "Pausar";
 
-        //Asignar una nueva palabra al ahorcado
-        palabraActualIndex = Math.floor(Math.random() * palabras.length);
-        palabraSeleccionada = palabras[palabraActualIndex].palabra;
+        const palabraObj = await obtenerPalabra();
+        if (!palabraObj) {
+            alert("No se pudo obtener palabra de la base de datos.");
+            return;
+        }
 
-        //Mide la longitud de la palabra seleccionada y la llena con _
+        palabraSeleccionada = palabraObj.palabra;
+        pistasActuales = palabraObj.pistas;
+
         palabraOculta = Array(palabraSeleccionada.length).fill("_");
 
-        //Reiniciar la imagen y los demas elementos visuales
         imgAhorcado.src = imagenes[intentos];
         actualizarPalabra();
         activarTeclado(true);
         reiniciarPistas();
-
-        //Inicia el temporizador
         iniciarTemporizador();
+
         console.log("Palabra seleccionada:", palabraSeleccionada);
     }
 
     //Funcion para reiniciar el intento pero con la misma palabra
-    function reiniciarJuego(){
+    function reiniciarJuego() {
         intentos = 0;
         tiempoRestante = 300;
         juegoPausado = false;
         btnPausar.textContent = "Pausar";
 
-        //otra vez se mide la longitud de la palabra seleccionada y la llena con _
         palabraOculta = Array(palabraSeleccionada.length).fill("_");
 
-        //Reiniciar la imagen y los demas elementos visuales
         imgAhorcado.src = imagenes[intentos];
         actualizarPalabra();
         activarTeclado(true);
         reiniciarPistas();
-
-        //Se vuelve a reiniciar el temporizados
         iniciarTemporizador();
     }
 
@@ -196,11 +184,10 @@ document.addEventListener("DOMContentLoaded", () => {
     //Funcion que permite mostrar las 3 pistas de la palabra con el botonnn
     function mostrarPista(index) {
         if (juegoPausado)
-            return; // Si el juego está en pausa, no muestra nada
-        const pistas = palabras[palabraActualIndex].pistas;
-        if (pistas && pistas[index]) {
+            return;
+        if (pistasActuales && pistasActuales[index]) {
             const pistaTexto = document.querySelector(".pista-texto");
-            pistaTexto.textContent = pistas[index];
+            pistaTexto.textContent = pistasActuales[index];
             btnPistas[index].disabled = true;
         }
     }

@@ -6,22 +6,18 @@ package Controlador;
 
 import Modelo.Palabra;
 import Modelo.PalabraDAO;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.*;
 /**
  *
- * @author informatica
+ * @author User
  */
-@WebServlet(name = "ControladorAhorcado", urlPatterns = {"/ControladorAhorcado"})
-public class ControladorAhorcado extends HttpServlet {
-    
-    PalabraDAO palabraDAO = new PalabraDAO();
+@WebServlet(name = "ControladorPalabras", urlPatterns = {"/ControladorPalabras"})
+public class ControladorPalabras extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,33 +36,38 @@ public class ControladorAhorcado extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CotroladorAhorcado</title>");            
+            out.println("<title>Servlet ControladorPalabras</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CotroladorAhorcado at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorPalabras at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Obtener una palabra aleatoria
-        Palabra palabra = palabraDAO.obtenerAleatoria();
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
 
-        // Guardar en atributos para JSP
-        request.setAttribute("palabra", palabra.getPalabra());
-        request.setAttribute("pista1", palabra.getPista1());
-        request.setAttribute("pista2", palabra.getPista2());
-        request.setAttribute("pista3", palabra.getPista3());
+        PalabraDAO dao = new PalabraDAO();
+        Palabra palabra = dao.obtenerPalabraAleatoria();
 
-        // Redirigir al JSP del juego
-        request.getRequestDispatcher("ahorcado.jsp").forward(request, response);
+        Gson gson = new Gson();
+        out.print(gson.toJson(palabra));
     }
 
-    
     /**
      * Handles the HTTP <code>POST</code> method.
      *

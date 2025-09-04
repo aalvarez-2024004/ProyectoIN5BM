@@ -2,6 +2,7 @@ package Modelo;
 
 import Config.Conexion;
 import Modelo.Palabra;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,51 +18,54 @@ public class PalabraDAO {
     ResultSet rs;
     
     // Listar todas las palabras
-    public List<Palabra> listar() {
+    public List<Palabra> listarPalabras() {
         List<Palabra> lista = new ArrayList<>();
-        String sql = "call sp_ListarPalabras";
-        
         try {
-            con = cn.Conexion();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            
+            Conexion cn = new Conexion();
+            Connection con = cn.Conexion();
+            CallableStatement cs = con.prepareCall("{ call sp_ListarPalabras() }");
+            ResultSet rs = cs.executeQuery();
+
             while (rs.next()) {
-                Palabra p = new Palabra();
-                p.setcodigoPalabra(rs.getInt("codigoPalabra"));
-                p.setPalabra(rs.getString("palabra"));
-                p.setPista1(rs.getString("pista1"));
-                p.setPista2(rs.getString("pista2"));
-                p.setPista3(rs.getString("pista3"));
-                lista.add(p);
+                lista.add(new Palabra(
+                        rs.getString("palabra"),
+                        rs.getString("pista1"),
+                        rs.getString("pista2"),
+                        rs.getString("pista3")
+                ));
             }
-        } catch (SQLException e) {
-            System.out.println("Error al listar palabras: " + e.getMessage());
+            rs.close();
+            cs.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return lista;
     }
     
     // Obtener una palabra aleatoria
-    public Palabra obtenerAleatoria() {
-        String sql = "Call sp_PalabraAleatoria";
-        Palabra p = null;
-        
+    public Palabra obtenerPalabraAleatoria() {
+        Palabra palabra = null;
         try {
-            con = cn.Conexion();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-            
+            Conexion cn = new Conexion();
+            Connection con = cn.Conexion();
+            CallableStatement cs = con.prepareCall("{ call sp_PalabraAleatoria() }");
+            ResultSet rs = cs.executeQuery();
+
             if (rs.next()) {
-                p = new Palabra();
-                p.setcodigoPalabra(rs.getInt("codigoPalabra"));
-                p.setPalabra(rs.getString("palabra"));
-                p.setPista1(rs.getString("pista1"));
-                p.setPista2(rs.getString("pista2"));
-                p.setPista3(rs.getString("pista3"));
+                palabra = new Palabra(
+                        rs.getString("palabra"),
+                        rs.getString("pista1"),
+                        rs.getString("pista2"),
+                        rs.getString("pista3")
+                );
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            rs.close();
+            cs.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return p;
+        return palabra;
     }
 }

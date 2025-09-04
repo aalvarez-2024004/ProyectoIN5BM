@@ -5,7 +5,6 @@ package Modelo;
  * @author informatica
  */
 public class Palabra {
-    private int codigoPalabra;
     private String palabra;
     private String pista1;
     private String pista2;
@@ -14,20 +13,11 @@ public class Palabra {
     public Palabra(){
     }
 
-    public Palabra(int codigoPalabra, String palabra, String pista1, String pista2, String pista3) {
-        this.codigoPalabra = codigoPalabra;
+    public Palabra(String palabra, String pista1, String pista2, String pista3) {
         this.palabra = palabra;
         this.pista1 = pista1;
         this.pista2 = pista2;
         this.pista3 = pista3;
-    }
-
-    public int getcodigoPalabra() {
-        return codigoPalabra;
-    }
-
-    public void setcodigoPalabra(int codigoPalabra) {
-        this.codigoPalabra = codigoPalabra;
     }
 
     public String getPalabra() {
