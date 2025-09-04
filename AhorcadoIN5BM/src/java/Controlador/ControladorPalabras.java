@@ -57,13 +57,19 @@ public class ControladorPalabras extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Le decimos al navegador que lo que vamos a enviar es un JSON
         response.setContentType("application/json");
+        
+        // Este no es obligatorio peeero, hace que se eviten problemas con acentos
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
 
+        //Se creala instancia del PalabraDAO y se llama al metodo obtenerPalabra
         PalabraDAO dao = new PalabraDAO();
         Palabra palabra = dao.obtenerPalabraAleatoria();
 
+        // Construimos manualmente un JSON con la palabra y sus pistas
+        // Esto se hace concatenando cadenas con los valores obtenidos del objeto "palabra"
         String respuesta = "{" + "\"palabra\":\"" + palabra.getPalabra() + "\","
                 + "\"pista1\":\"" + palabra.getPista1() + "\","
                 + "\"pista2\":\"" + palabra.getPista2() + "\","
