@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const temporizadorElement = document.querySelector(".temporizador");
 
     //Funcion para obtener la palara desde el servlet ControladorPalabras
+    //Async indica que debe de esperar a que el servidor conteste
     async function obtenerPalabra() {
         try {
             const response = await fetch("ControladorPalabras"); // Servlet
