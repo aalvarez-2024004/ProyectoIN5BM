@@ -2,6 +2,13 @@ drop database if exists DB_ahorcado;
 create database DB_ahorcado;
 use DB_ahorcado;
 
+create table Usuarios(
+	codigoUsuario int auto_increment,
+    usuario varchar(50) not null,
+    contraseña varchar(100) not null,
+    primary key PK_codigoUsuario(codigoUsuario)
+);
+
 create table Palabras(
 	codigoPalabra int auto_increment,
     palabra varchar(50) not null,
@@ -49,3 +56,28 @@ Delimiter $$
 		end $$
 Delimiter ;
 call sp_PalabraAleatoria();
+
+
+Delimiter $$
+	create procedure sp_AgregarUsuario(
+		in usuario varchar(50),
+		in contraseña varchar(100))
+	begin
+		insert into Usuarios (usuario, contraseña)
+			values (usuario, contraseña);
+	end $$
+Delimiter ;
+
+call sp_AgregarUsuario('Adrian','2024004');
+
+Delimiter $$
+	create procedure sp_ValidarUsuario(
+		in p_usuario varchar(50),
+		in p_contrasena varchar(100))
+	begin
+		select  * from Usuarios
+			where usuario = p_usuario AND contraseña = p_contrasena;
+	end $$
+Delimiter ;
+
+call sp_ValidarUsuario('Adrian','2024004');

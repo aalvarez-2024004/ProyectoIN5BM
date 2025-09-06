@@ -19,10 +19,12 @@
             <p>Ingresa tus datos para poder iniciar sesion</p>
 
             <form action="validacion" method="POST">
-                <input type="tex" name="txtCorreo" placeholder="Correo" required />
+                <input type="text" name="txtUsuario" placeholder="Usuario" required />
                 <input type="password" name="txtContrasena" placeholder="Contraseña" required />
-                <button type="submit" name="btnIngresar" value="Ingresar">Iniciar Sesión</button>
+                <button type="submit" name="accion" value="Ingresar">Iniciar Sesión</button>
             </form>
+            
+            <p class="login-link">¿No tienes cuenta? <a href="registrarse.jsp">Regístrate</a></p>
 
         </div>
     </body>

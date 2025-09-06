@@ -4,6 +4,8 @@
  */
 package Controlador;
 
+import Modelo.Usuario;
+import Modelo.UsuarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -57,7 +60,7 @@ public class Validacion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("index.jsp");
     }
 
     /**
@@ -72,18 +75,36 @@ public class Validacion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String correo = request.getParameter("txtCorreo");
-        String pass = request.getParameter("txtContrasena");
+        String accion = request.getParameter("accion");
+        String usuario = request.getParameter("txtUsuario");
+        String contraseña = request.getParameter("txtContrasena");
 
-        String correoValido = "1";
-        String passValida = "1";
+        UsuarioDAO dao = new UsuarioDAO();
 
-        // Si las credenciales son correctas
-        if (correo.equals(correoValido) && pass.equals(passValida)) {
-            response.sendRedirect("ahorcado.jsp");
-        // Si no son correctas
-        } else {
-            response.sendRedirect("index.jsp");
+        switch (accion) {
+            case "Ingresar":
+                Usuario user = dao.validarUsuario(usuario, contraseña);
+                if (user != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("usuario", user);
+                    response.sendRedirect("ahorcado.jsp");
+                } else {
+                    response.sendRedirect("index.jsp?error=1");
+                }
+                break;
+            case "Registrarse":
+                Usuario nuevo = new Usuario(usuario, contraseña);
+                boolean registrado = dao.agregarUsuario(nuevo);
+                
+                if (registrado) {
+                    response.sendRedirect("index.jsp");
+                } else {
+                    response.sendRedirect("registro.jsp");
+                }
+                break;
+            default:
+                response.sendRedirect("index.jsp");
+                break;
         }
     }
 
